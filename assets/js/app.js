@@ -64,7 +64,11 @@ function observer() {
       // User is signed out.
       console.log('There is no active user');
       contenido.innerHTML = `
-    
+      <div class="container mt-2">
+        <div class="alert alert-warning" role="alert">
+        There is no active user!
+        </div>
+      </div>
     `;
       // ...
     }
