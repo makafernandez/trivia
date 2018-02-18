@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Trivia</title>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDMdepuZ02IJNHFMT1gQ00uL7sTVSApmRM",
+      authDomain: "trivia-f941e.firebaseapp.com",
+      databaseURL: "https://trivia-f941e.firebaseio.com",
+      projectId: "trivia-f941e",
+      storageBucket: "trivia-f941e.appspot.com",
+      messagingSenderId: "643890857113"
+    };
+    firebase.initializeApp(config);
+  </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/main.css">
