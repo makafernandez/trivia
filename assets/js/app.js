@@ -63,6 +63,9 @@ function observer() {
     } else {
       // User is signed out.
       console.log('There is no active user');
+      contenido.innerHTML = `
+    
+    `;
       // ...
     }
   });
@@ -74,8 +77,14 @@ function appears(user) {
   var contenido = document.getElementById('contenido');
   if (user.emailVerified) {
     contenido.innerHTML = `
-    <p>Welcome!</p>
-    <button onclick="closing()" class="btn btn-lg btn-outline-dark">Log out</button>
+    <div class="container mt-2">
+      <div class="alert alert-success" role="alert">
+      <h6 class="alert-heading">Welcome! ${user.email}</h6>
+      <p>Aww yeah, If you are ready to start playing click on the "play" button.</p>
+      <hr>
+      </div>
+      <button onclick="closing()" class="btn btn-lg btn-outline-dark">Log out</button> 
+    </div>
     `;
   }
 }
