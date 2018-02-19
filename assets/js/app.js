@@ -51,9 +51,7 @@ function observer() {
       // User is signed in.
       var displayName = user.displayName;
       var email = user.email;
-      console.log('ñññ');
       console.log(user.emailVerified);
-      console.log('ñññ');
       var emailVerified = user.emailVerified;
       var photoURL = user.photoURL;
       var isAnonymous = user.isAnonymous;
@@ -114,6 +112,19 @@ function verify() {
   });
 }
 
+// VISTAS 
+$('#startBtn').click(function() {
+  $('#initial').hide();
+});
+$('#startBtn').click(function() {
+  $('#contenido').hide();
+});
+$('#startBtn').click(function() {
+  $('#welcome').hide();
+});
+$('#startBtn').click(function() {
+  $('#settings').show();
+});
 
 // COMENZAR JUEGO
 $('#startBtn').click(function() {
