@@ -8,22 +8,39 @@
 
 // Initialize Firebase
 var config = {
-  apiKey: 'AIzaSyDMdepuZ02IJNHFMT1gQ00uL7sTVSApmRM',
-  authDomain: 'trivia-f941e.firebaseapp.com',
-  databaseURL: 'https://trivia-f941e.firebaseio.com',
-  projectId: 'trivia-f941e',
-  storageBucket: 'trivia-f941e.appspot.com',
-  messagingSenderId: '643890857113'
+  apiKey: "AIzaSyDMdepuZ02IJNHFMT1gQ00uL7sTVSApmRM",
+  authDomain: "trivia-f941e.firebaseapp.com",
+  databaseURL: "https://trivia-f941e.firebaseio.com",
+  projectId: "trivia-f941e",
+  storageBucket: "trivia-f941e.appspot.com",
+  messagingSenderId: "643890857113"
 };
 firebase.initializeApp(config);
 
+// Al cargar:
 $(document).ready(function() {
+  
   // Splash
   $(function() {
     setTimeout(function() {
       $('#splash').fadeOut(500);
     }, 2000);
   });
+
+  // Recuperar listado de categorías:
+  let categories = '';
+  fetch('https://opentdb.com/api_category.php')
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      // Cargar categorías en las opciones de settings:
+      $.each(data.trivia_categories, function(index, item) {
+        $('#categorySelect').append(`<option value="${item.id}">${item.name}</option>`);
+      });
+    });
+  
 });
 
 // FIREBASE
@@ -131,10 +148,43 @@ function verify() {
   });
 }
 
+// SETTINGS:
+let category = '';
+let difficulty = '';
+let amount = '';
+let type = '';
+
+// Slider
+let slider = document.getElementById('slider');
+let output = document.getElementById('output');
+output.innerHTML = slider.value; // Display the default slider value
+
+$('#submitBtn').click(function() {
+  // Capturar Categoría:
+  category = $('#categorySelect').val();
+  // Capturar Dificultad:
+  difficulty = $('#difficultySelect').val();
+  
+  // Capturar Cantidad de Preguntas:
+  $('#slider').on('input', function() {  // Update the current slider value (each time you drag the slider handle)
+    output.innerHTML = slider.value;
+  });
+  amount = slider.value;
+  
+  // Capturar tipo de juego:
+  type = $('#typeRadios input').val();
+
+  console.log(category);
+  console.log(difficulty);
+  console.log(amount);
+  console.log(type);
+});
+
 // COMENZAR JUEGO
 let token = '';
 
 $('#startBtn').click(function() {
+  // Solicita token:
   fetch('https://opentdb.com/api_token.php?command=request')
     .then(function(response) {
       return response.json();
@@ -143,37 +193,16 @@ $('#startBtn').click(function() {
       console.log(data.response_message);
       token = data.token;
     });
+  
+  // Solicita set de preguntas, según settings:
+  fetch(`https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data);
+    });
 });
-
-// SETTINGS:
-let category = $('#categoryBtn').val();
-let dificulty = $('#dificultyBtn').val();
-let amount = '';
-
-$('#dificultyBtn.dropdown-item').click(function() {
-  amount = $('#dificultyBtn.dropdown-item').val();
-  console.log(amount);
-});
-
-fetch(`https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=easy&type=multiple&token=${token}`)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log(data);
-  });
-
-// SLIDER
-let slider = document.getElementById('slider');
-let output = document.getElementById('demo');
-output.innerHTML = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  output.innerHTML = this.value;
-  amount = this.value;
-  console.log(amount);
-};
 
 // VISTAS 
 $('#startBtn').click(function() {
