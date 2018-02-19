@@ -6,7 +6,9 @@
 // https://opentdb.com/api_token.php?command=request
 // https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE
 
+/*
 $(document).ready(function() {
+  
   // Splash
   $(function() {
     setTimeout(function() {
@@ -14,7 +16,7 @@ $(document).ready(function() {
     }, 2000);
   });
 
-});
+}); */
 
 // FIREBASE
 function register() {
