@@ -1,3 +1,86 @@
-section {
+/* Color palette: 
+* Azul #2EB2FF,
+* Yellow #FFF952,
+* Red #FF5C5C
+*/
+
+section, header {
   height: 100vh;
+  background-color: #FF5C5C;
+}
+
+.red {
+  background-color: #FF5C5C;
+}
+
+.yellow {
+  background-color: #FFF952 !important;
+}
+
+.yellow-text {
+  color: #FFF952;
+}
+
+#startBtn {
+  border: 1px solid #FFF952;
+  color: #FF5C5C;
+  font-weight: bold;
+  margin-bottom: 15vh;
+}
+
+#logo {
+  padding: 25% 0;
+}
+
+.nav {
+  bottom: 0vh;
+  width: 100vw:
+  position: fixed;
+  display: block;
+}
+
+/* SLIDER */
+.slidecontainer {
+  width: 100%;
+  /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;   
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+
+.slider:hover {
+  opacity: 1;
+  /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
 }

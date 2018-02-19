@@ -5,8 +5,25 @@
 // https://opentdb.com/api.php?amount=10&token=YOURTOKENHERE
 // https://opentdb.com/api_token.php?command=request
 // https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE
+
+// Initialize Firebase
+var config = {
+  apiKey: 'AIzaSyDMdepuZ02IJNHFMT1gQ00uL7sTVSApmRM',
+  authDomain: 'trivia-f941e.firebaseapp.com',
+  databaseURL: 'https://trivia-f941e.firebaseio.com',
+  projectId: 'trivia-f941e',
+  storageBucket: 'trivia-f941e.appspot.com',
+  messagingSenderId: '643890857113'
+};
+firebase.initializeApp(config);
+
 $(document).ready(function() {
-  
+  // Splash
+  $(function() {
+    setTimeout(function() {
+      $('#splash').fadeOut(500);
+    }, 2000);
+  });
 });
 
 // FIREBASE
@@ -51,7 +68,9 @@ function observer() {
       // User is signed in.
       var displayName = user.displayName;
       var email = user.email;
+      console.log('ñññ');
       console.log(user.emailVerified);
+      console.log('ñññ');
       var emailVerified = user.emailVerified;
       var photoURL = user.photoURL;
       var isAnonymous = user.isAnonymous;
@@ -64,7 +83,7 @@ function observer() {
       contenido.innerHTML = `
       <div class="container mt-2">
         <div class="alert alert-warning" role="alert">
-        There is no active user!
+        There is no active user! Log in or Resgister.
         </div>
       </div>
     `;
@@ -84,8 +103,8 @@ function appears(user) {
       <h6 class="alert-heading">Welcome! ${user.email}</h6>
       <p>Aww yeah, If you are ready to start playing click on the "play" button.</p>
       <hr>
+      <button onclick="closing()" class="btn btn-outline-dark">Log out</button>
       </div>
-      <button onclick="closing()" class="btn btn-lg btn-outline-dark">Log out</button> 
     </div>
     `;
   }
@@ -112,36 +131,31 @@ function verify() {
   });
 }
 
-// VISTAS 
-$('#startBtn').click(function() {
-  $('#initial').hide();
-});
-$('#startBtn').click(function() {
-  $('#contenido').hide();
-});
-$('#startBtn').click(function() {
-  $('#welcome').hide();
-});
-$('#startBtn').click(function() {
-  $('#settings').show();
-});
-
 // COMENZAR JUEGO
-$('#startBtn').click(function() {
+let token = '';
 
+$('#startBtn').click(function() {
+  fetch('https://opentdb.com/api_token.php?command=request')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data.response_message);
+      token = data.token;
+    });
 });
 
-let token = '';
-fetch('https://opentdb.com/api_token.php?command=request')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log(data.response_message);
-    token = data.token;
-  });
+// SETTINGS:
+let category = $('#categoryBtn').val();
+let dificulty = $('#dificultyBtn').val();
+let amount = '';
 
-fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple&token=${token}`)
+$('#dificultyBtn.dropdown-item').click(function() {
+  amount = $('#dificultyBtn.dropdown-item').val();
+  console.log(amount);
+});
+
+fetch(`https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=easy&type=multiple&token=${token}`)
   .then(function(response) {
     return response.json();
   })
@@ -149,4 +163,34 @@ fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=mul
     console.log(data);
   });
 
-  
+// SLIDER
+let slider = document.getElementById('slider');
+let output = document.getElementById('demo');
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+  amount = this.value;
+  console.log(amount);
+};
+
+// VISTAS 
+$('#startBtn').click(function() {
+  $('#login').hide();
+});
+$('#startBtn').click(function() {
+  $('#contenido').hide();
+});
+$('#startBtn').click(function() {
+  $('#startBtn').hide();
+});
+$('#startBtn').click(function() {
+  $('#welcome').show();
+});
+$('#startBtn').click(function() {
+  $('#settings').show();
+});
+$('#startBtn').click(function() {
+  $('#about').show();
+});
