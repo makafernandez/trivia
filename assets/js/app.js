@@ -100,7 +100,7 @@ function observer() {
       contenido.innerHTML = `
       <div class="container mt-2">
         <div class="alert alert-warning" role="alert">
-        There is no active user!
+        There is no active user! Log in or Resgister.
         </div>
       </div>
     `;
@@ -120,8 +120,8 @@ function appears(user) {
       <h6 class="alert-heading">Welcome! ${user.email}</h6>
       <p>Aww yeah, If you are ready to start playing click on the "play" button.</p>
       <hr>
+      <button onclick="closing()" class="btn btn-outline-dark">Log out</button>
       </div>
-      <button onclick="closing()" class="btn btn-lg btn-outline-dark">Log out</button> 
     </div>
     `;
   }
@@ -202,4 +202,24 @@ $('#startBtn').click(function() {
     .then(function(data) {
       console.log(data);
     });
+});
+
+// VISTAS 
+$('#startBtn').click(function() {
+  $('#login').hide();
+});
+$('#startBtn').click(function() {
+  $('#contenido').hide();
+});
+$('#startBtn').click(function() {
+  $('#startBtn').hide();
+});
+$('#startBtn').click(function() {
+  $('#welcome').show();
+});
+$('#startBtn').click(function() {
+  $('#settings').show();
+});
+$('#startBtn').click(function() {
+  $('#about').show();
 });
