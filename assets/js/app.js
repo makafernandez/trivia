@@ -5,8 +5,15 @@
 // https://opentdb.com/api.php?amount=10&token=YOURTOKENHERE
 // https://opentdb.com/api_token.php?command=request
 // https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE
+
 $(document).ready(function() {
-  
+  // Splash
+  $(function() {
+    setTimeout(function() {
+      $('#splash').fadeOut(500);
+    }, 2000);
+  });
+
 });
 
 // FIREBASE
@@ -114,23 +121,31 @@ function verify() {
   });
 }
 
-
 // COMENZAR JUEGO
-$('#startBtn').click(function() {
+let token = '';
 
+$('#startBtn').click(function() {
+  fetch(`https://opentdb.com/api_token.php?command=request`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data.response_message);
+      token = data.token;
+    });
 });
 
-let token = '';
-fetch('https://opentdb.com/api_token.php?command=request')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log(data.response_message);
-    token = data.token;
-  });
+// SETTINGS:
+let category = $('#categoryBtn').val();
+let dificulty = $('#dificultyBtn').val();
+let amount = '';
 
-fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple&token=${token}`)
+$('#dificultyBtn.dropdown-item').click(function() {
+  amount = $('#dificultyBtn.dropdown-item').val();
+  console.log(amount);
+});
+
+fetch(`https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=easy&type=multiple&token=${token}`)
   .then(function(response) {
     return response.json();
   })
@@ -138,4 +153,14 @@ fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=mul
     console.log(data);
   });
 
-  
+// SLIDER
+let slider = document.getElementById('slider');
+let output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+  amount = this.value;
+  console.log(amount);
+}
